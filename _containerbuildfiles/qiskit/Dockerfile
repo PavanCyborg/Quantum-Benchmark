@@ -15,7 +15,7 @@ SHELL [ "/bin/bash", "--login", "-c" ]
 ARG username=quser
 ARG uid=1000
 ARG gid=100
-ARG broot=./QC-Proto-Benchmarks
+ARG broot=./QC-App-Oriented-Benchmarks-master
 ARG platform=qiskit
 
 ENV PLATFORM=$platform
@@ -26,7 +26,7 @@ ENV HOME /home/quser
 ENV BROOT $broot
 ENV MINICONDA_VERSION 4.8.3
 ENV CONDA_DIR $HOME/miniconda3
-ENV CROOT ./QC-Proto-Benchmarks/_containerbuildfiles/$platform
+ENV CROOT ./QC-App-Oriented-Benchmarks-master/_containerbuildfiles/$platform
 
 # copy some support files, not some of these aren't currently used but are here as placeholders
 COPY ${CROOT}/requirements.txt /tmp/
@@ -58,7 +58,7 @@ RUN conda install --quiet --yes \
     jupyter notebook --generate-config 
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
-ENV TINI_VERSION v0.6.0
+ENV TINI_VERSION v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 RUN chmod +x /usr/bin/tini
 ENTRYPOINT ["/usr/bin/tini", "--"]
@@ -79,7 +79,7 @@ ADD ${BROOT}/amplitude-estimation ${PROJECT_DIR}/amplitude-estimation
 ADD ${BROOT}/monte-carlo ${PROJECT_DIR}/monte-carlo
 ADD ${BROOT}/shors ${PROJECT_DIR}/shors
 ADD ${BROOT}/grovers ${PROJECT_DIR}/grovers
-COPY ${BROOT}/benchmarks-qiskit.ipynb.template/ ${PROJECT_DIR}/benchmarks-qiskit.ipynb
+COPY ${BROOT}/benchmarks-qiskit.ipynb/ ${PROJECT_DIR}/benchmarks-qiskit.ipynb
 COPY ${BROOT}/_common/metrics.py ${PROJECT_DIR}/
 
 EXPOSE 8888
