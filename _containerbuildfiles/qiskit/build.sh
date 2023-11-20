@@ -6,8 +6,8 @@ export IMAGE_TAG=${PLATFORM}benchmarktag
 docker image build \
   --build-arg username=$USER \
   --build-arg uid=$UID \
-  --build-arg gid=`id -g` \
+  --build-arg gid=$GID \
   --build-arg platform=${PLATFORM} \
-  --file ./QC-App-Oriented-Benchmarks-master/_containerbuildfiles/${PLATFORM}/Dockerfile \
+  --file ./QC-Proto-Benchmarks/_containerbuildfiles/${PLATFORM}/Dockerfile \
   --tag $IMAGE_NAME:$IMAGE_TAG \
   .
